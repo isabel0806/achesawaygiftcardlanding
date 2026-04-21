@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gift Cards — Aches Away Toronto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:      #28B9A5;
+      --teal-dk:   #1A9E8C;
+      --teal-lt:   #E6F7F5;
+      --yellow:    #F4C830;
+      --yellow-dk: #D9AF20;
+      --dark:      #1C1C3A;
+      --mid:       #4A5568;
+      --light:     #718096;
+      --bg:        #F8FAFB;
+      --white:     #FFFFFF;
+      --card-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --card-hover:  0 12px 40px rgba(0,0,0,0.13);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 66px;
+    }
+    .nav-logo img { height: 36px; }
+    .nav-logo-text {
+      font-size: 16px; font-weight: 800;
+      color: var(--dark); letter-spacing: -0.01em;
+    }
+    .nav-logo-text span { color: var(--teal); }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 14px; font-weight: 600;
+      color: var(--mid); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--dark); }
+    .nav-cta {
+      background: var(--yellow); color: var(--dark);
+      font-size: 13px; font-weight: 700;
+      padding: 10px 22px; border-radius: 100px;
+      text-decoration: none; transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--yellow-dk); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 110px 48px 72px;
+      text-align: center;
+      max-width: 720px; margin: 0 auto;
+    }
+    .eyebrow {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--teal);
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 54px);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.025em; margin-bottom: 18px;
+    }
+    .hero p {
+      font-size: 17px; line-height: 1.65;
+      color: var(--mid); margin-bottom: 36px;
+    }
+    .hero-actions { display: flex; align-items: center; justify-content: center; gap: 14px; }
+    .btn-yellow {
+      background: var(--yellow); color: var(--dark);
+      font-size: 14px; font-weight: 700;
+      padding: 14px 28px; border-radius: 100px;
+      text-decoration: none; transition: background .2s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-yellow:hover { background: var(--yellow-dk); }
+    .btn-outline {
+      font-size: 14px; font-weight: 600; color: var(--mid);
+      text-decoration: none; padding: 14px 22px;
+      border: 1.5px solid rgba(0,0,0,0.12); border-radius: 100px;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-outline:hover { border-color: var(--dark); color: var(--dark); }
+
+    /* ── UNIVERSAL GIFT CARD SECTION ── */
+    .ugc-section {
+      padding: 40px 48px 80px;
+      max-width: 1160px; margin: 0 auto;
+    }
+    .ugc-section .eyebrow { text-align: center; margin-bottom: 10px; }
+    .ugc-section h2 {
+      text-align: center;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .ugc-section .subtitle {
+      text-align: center; font-size: 16px;
+      color: var(--mid); line-height: 1.6;
+      margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+    .ugc-card {
+      background: linear-gradient(135deg, #2CC5B0 0%, #1A9E8C 100%);
+      border-radius: 24px;
+      padding: 0;
+      display: flex; align-items: stretch; justify-content: space-between;
+      overflow: hidden; position: relative;
+      height: 460px;
+    }
+    .ugc-card::before {
+      content: ''; position: absolute;
+      top: -80px; right: 280px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+    }
+    .ugc-left { max-width: 480px; position: relative; z-index: 1; padding: 48px 48px 60px 48px; flex: 1; }
+    .ugc-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.2);
+      color: var(--white);
+      font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px; border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .ugc-badge::before {
+      content: '🎁'; font-size: 11px;
+    }
+    .ugc-left h3 {
+      font-size: 32px; font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--white);
+      margin-bottom: 14px;
+    }
+    .ugc-left p {
+      font-size: 15px; line-height: 1.6;
+      color: rgba(255,255,255,0.8); margin-bottom: 24px;
+    }
+    .ugc-checks {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 28px;
+    }
+    .ugc-check {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9);
+    }
+    .ugc-check::before { content: '✓'; font-weight: 800; }
+    .btn-ugc {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); color: var(--dark);
+      font-size: 14px; font-weight: 700;
+      padding: 13px 24px; border-radius: 100px;
+      text-decoration: none; transition: opacity .2s;
+    }
+    .btn-ugc:hover { opacity: 0.9; }
+    .btn-ugc::before { content: '🎁'; }
+    .ugc-right {
+      flex-shrink: 0;
+      width: 440px;
+      align-self: stretch;
+    }
+    .gift-card-img {
+      width: 100%; height: 100%;
+      object-fit: contain; object-position: center center; display: block;
+      padding: 12px 12px 12px 0;
+    }
+
+    /* ── SERVICES CAROUSEL ── */
+    .services-section {
+      padding: 80px 48px;
+      background: var(--white);
+    }
+    .services-section .eyebrow { text-align: center; margin-bottom: 10px; }
+    .services-section h2 {
+      text-align: center;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .services-section .subtitle {
+      text-align: center; font-size: 16px;
+      color: var(--mid); line-height: 1.6;
+      max-width: 520px; margin: 0 auto 40px;
+    }
+    .carousel-wrap { position: relative; }
+    .carousel {
+      display: flex; gap: 16px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      padding: 8px 4px 20px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .carousel::-webkit-scrollbar { display: none; }
+    .service-card {
+      flex-shrink: 0; width: 240px;
+      background: var(--white);
+      border: 1.5px solid rgba(0,0,0,0.08);
+      border-radius: 16px; padding: 22px;
+      scroll-snap-align: start;
+      transition: transform .2s, box-shadow .2s;
+      cursor: pointer;
+      display: flex; flex-direction: column;
+    }
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--card-hover);
+    }
+    .service-type-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px 4px 7px;
+      border-radius: 50px; width: fit-content;
+      border: 1.5px solid; margin-bottom: 14px;
+    }
+    .service-type-badge::before {
+      content: ''; display: block;
+      width: 5px; height: 5px;
+      border-radius: 50%; background: currentColor; flex-shrink: 0;
+    }
+    .service-duration {
+      font-size: 11px; font-weight: 600;
+      color: var(--light); margin-bottom: 6px;
+    }
+    .service-name {
+      font-size: 15px; font-weight: 700;
+      color: var(--dark); margin-bottom: 8px; line-height: 1.3;
+    }
+    .service-price {
+      font-size: 18px; font-weight: 800;
+      color: var(--dark);
+    }
+    .service-price span {
+      font-size: 13px; font-weight: 500; color: var(--light);
+    }
+    .btn-service {
+      display: block; width: 100%; text-align: center;
+      margin-top: auto; padding-top: 16px;
+      background: var(--yellow); color: var(--dark);
+      font-size: 12px; font-weight: 700;
+      padding: 10px; border-radius: 100px;
+      text-decoration: none; transition: background .2s;
+    }
+    .btn-service:hover { background: var(--yellow-dk); }
+
+    /* ── BUNDLES ── */
+    .bundles-section {
+      padding: 80px 48px 100px;
+      max-width: 1160px; margin: 0 auto;
+    }
+    .bundles-section .eyebrow { text-align: center; margin-bottom: 10px; }
+    .bundles-section h2 {
+      text-align: center;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .bundles-section .subtitle {
+      text-align: center; font-size: 16px;
+      color: var(--mid); line-height: 1.6;
+      max-width: 540px; margin: 0 auto 48px;
+    }
+    .bundles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 20px;
+    }
+    .bundle-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: transform .25s, box-shadow .25s;
+      display: flex; flex-direction: column;
+    }
+    .bundle-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-hover);
+    }
+    .bundle-img-wrap {
+      position: relative; overflow: hidden;
+    }
+    .bundle-img-wrap img {
+      width: 100%; height: 280px; object-fit: cover; display: block;
+    }
+    .bundle-img-placeholder {
+      width: 100%; height: 190px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px;
+    }
+    .bundle-highlight-badge {
+      position: absolute; top: 14px; left: 14px;
+      background: var(--yellow); color: var(--dark);
+      font-size: 10px; font-weight: 800; letter-spacing: 0.06em;
+      padding: 5px 12px; border-radius: 100px;
+    }
+    .bundle-new-badge {
+      position: absolute; top: 14px; left: 14px;
+      background: var(--teal); color: var(--white);
+      font-size: 10px; font-weight: 800; letter-spacing: 0.06em;
+      padding: 5px 12px; border-radius: 100px;
+    }
+    .bundle-body {
+      padding: 22px 24px 24px;
+      display: flex; flex-direction: column; flex: 1;
+    }
+    .bundle-tags {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .bundle-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 4px 10px; border-radius: 100px;
+    }
+    .bundle-tag.teal { background: var(--teal); color: var(--white); }
+    .bundle-tag.outline { background: transparent; border: 1.5px solid rgba(0,0,0,0.12); color: var(--mid); }
+    .bundle-name {
+      font-size: 22px; font-weight: 800;
+      letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .bundle-hook {
+      font-size: 14px; font-style: italic;
+      color: var(--mid); line-height: 1.55;
+      margin-bottom: 16px;
+    }
+    .bundle-includes {
+      font-size: 13px; color: var(--mid);
+      line-height: 1.6; margin-bottom: 20px; flex: 1;
+    }
+    .bundle-includes li {
+      list-style: none; padding: 5px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .bundle-includes li:last-child { border-bottom: none; }
+    .bundle-includes li::before {
+      content: '✦'; color: var(--teal);
+      font-size: 9px; margin-top: 3px; flex-shrink: 0;
+    }
+    .bundle-footer {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .bundle-price {
+      font-size: 28px; font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .bundle-hst {
+      font-size: 12px; color: var(--light);
+      font-weight: 500; margin-top: 3px;
+    }
+    .btn-bundle {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--yellow); color: var(--dark);
+      font-size: 13px; font-weight: 700;
+      padding: 12px 20px; border-radius: 100px;
+      text-decoration: none; white-space: nowrap;
+      transition: background .2s; flex-shrink: 0;
+    }
+    .btn-bundle:hover { background: var(--yellow-dk); }
+    .btn-bundle::before { content: '🎁'; font-size: 13px; }
+
+    /* ── HOW IT WORKS ── */
+    .how-section {
+      background: var(--white);
+      padding: 80px 48px;
+    }
+    .how-section .eyebrow { text-align: center; margin-bottom: 10px; }
+    .how-section h2 {
+      text-align: center;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .how-section .subtitle {
+      text-align: center; font-size: 16px;
+      color: var(--mid); max-width: 480px;
+      margin: 0 auto 48px; line-height: 1.6;
+    }
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 32px; max-width: 900px; margin: 0 auto;
+    }
+    .step {
+      text-align: center; padding: 0 12px;
+    }
+    .step-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--teal-lt); border: 2px solid var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 22px;
+    }
+    .step h3 {
+      font-size: 16px; font-weight: 700; margin-bottom: 10px;
+    }
+    .step p {
+      font-size: 14px; color: var(--mid); line-height: 1.65;
+    }
+
+    /* ── FAQ ── */
+    .faq-section {
+      padding: 80px 48px;
+      max-width: 740px; margin: 0 auto;
+    }
+    .faq-section .eyebrow { text-align: center; margin-bottom: 10px; }
+    .faq-section h2 {
+      text-align: center;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 48px;
+    }
+    .faq-item {
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 20px 0;
+    }
+    .faq-q {
+      font-size: 16px; font-weight: 700;
+      cursor: pointer; display: flex;
+      align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .faq-q::after {
+      content: '+'; font-size: 22px; font-weight: 300;
+      color: var(--teal); flex-shrink: 0;
+      transition: transform .25s;
+    }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 14px; color: var(--mid);
+      line-height: 1.7; max-height: 0;
+      overflow: hidden; transition: max-height .35s ease, padding .25s;
+    }
+    .faq-item.open .faq-a {
+      max-height: 300px; padding-top: 12px;
+    }
+
+    /* ── FOOTER CTA ── */
+    .footer-cta {
+      background: linear-gradient(135deg, #2CC5B0 0%, #1A9E8C 100%);
+      padding: 72px 48px;
+      text-align: center;
+    }
+    .footer-cta h2 {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800; color: var(--white);
+      letter-spacing: -0.02em; margin-bottom: 14px;
+    }
+    .footer-cta p {
+      font-size: 16px; color: rgba(255,255,255,0.8);
+      margin-bottom: 32px; line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 40px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo {
+      font-size: 14px; font-weight: 800;
+      color: var(--white); letter-spacing: -0.01em;
+    }
+    .footer-logo span { color: var(--teal); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      font-size: 12px; font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none; transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    @media (max-width: 860px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 20px 60px; }
+      .ugc-section { padding: 40px 20px 60px; }
+      .ugc-card { flex-direction: column; padding: 32px 24px; }
+      .gift-card-img { width: 100%; max-width: 320px; margin: 0 auto; }
+      .services-section { padding: 60px 20px; }
+      .bundles-section { padding: 60px 20px 80px; }
+      .bundles-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; gap: 24px; }
+      .how-section, .faq-section { padding: 60px 20px; }
+      .footer-cta { padding: 56px 20px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo-text">Aches <span>Away</span> Toronto</div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#bundles">Bundles</a>
+    <a href="#how">How It Works</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="#bundles" class="nav-cta">🎁 Shop Gift Cards</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">Premium Gift Cards · Toronto</div>
+  <h1>The gift that says<br><em>I actually see you.</em></h1>
+  <p>Curated wellness bundles from Aches Away — Toronto's premium therapeutic clinic. More than a massage. A real gift.</p>
+  <div class="hero-actions">
+    <a href="#bundles" class="btn-yellow">🎁 Shop Bundles</a>
+    <a href="#services" class="btn-outline">Browse all services</a>
+  </div>
+</section>
+
+<!-- UNIVERSAL GIFT CARD -->
+<section class="ugc-section" id="gift-card">
+  <div class="eyebrow">Gift a Session</div>
+  <h2>Not Sure What to Choose?</h2>
+  <p class="subtitle">Send a flexible gift card and let them pick the service and time that works best for them.</p>
+
+  <div class="ugc-card">
+    <div class="ugc-left">
+      <div class="ugc-badge">Universal Gift Card</div>
+      <h3>Give Any Amount,<br>Any Service</h3>
+      <p>The perfect gift when you're not sure where to start. Our general gift card is redeemable for any service — massage, osteopathy, acupuncture, or naturopathy. They choose, you treat.</p>
+      <div class="ugc-checks">
+        <div class="ugc-check">Any service</div>
+        <div class="ugc-check">Any amount</div>
+        <div class="ugc-check">Instant delivery</div>
+        <div class="ugc-check">No expiry</div>
+        <div class="ugc-check">Add personal message</div>
+      </div>
+      <a href="#" class="btn-ugc">Buy a Gift Card →</a>
+    </div>
+    <div class="ugc-right">
+      <img class="gift-card-img"
+        src="https://raw.githubusercontent.com/isabel0806/achesawayimages/xperigift/aches_away_digital_gift_ribbon_v2.png"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        alt="Aches Away Gift Card"/>
+      <div style="display:none;width:280px;height:175px;background:rgba(255,255,255,0.15);border-radius:16px;align-items:center;justify-content:center;font-size:48px;">🎁</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES CAROUSEL -->
+<section class="services-section" id="services">
+  <div class="eyebrow">All Services</div>
+  <h2>Gift a Single Session</h2>
+  <p class="subtitle">Not sure which bundle fits? Gift one specific session — they book online at their convenience.</p>
+  <div class="carousel-wrap">
+    <div class="carousel" id="servicesCarousel"></div>
+  </div>
+</section>
+
+<!-- BUNDLES -->
+<section class="bundles-section" id="bundles">
+  <div class="eyebrow">Curated Packages</div>
+  <h2>Explore Our Wellness Bundles</h2>
+  <p class="subtitle">Designed for specific goals — whether it's recovery, performance, or movement. Each bundle is a thoughtful gift that actually gets used.</p>
+
+  <div class="bundles-grid">
+
+    <!-- The Rising Pro -->
+    <div class="bundle-card">
+      <div class="bundle-img-wrap">
+        <img src="https://raw.githubusercontent.com/isabel0806/achesawayimages/xperigift/Recovery%20Starter%20v2.png"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          alt="The Rising Pro"/>
+        <div class="bundle-img-placeholder" style="display:none;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);">🏃</div>
+      </div>
+      <div class="bundle-body">
+        <div class="bundle-tags">
+          <span class="bundle-tag teal">60-min session</span>
+          <span class="bundle-tag outline">Recovery kit</span>
+        </div>
+        <div class="bundle-name">The Rising Pro</div>
+        <div class="bundle-hook">You're investing in their future. Give them the recovery tools the pros actually use.</div>
+        <ul class="bundle-includes">
+          <li>1 × 60-min Sports Therapy Session</li>
+          <li>Pro-Recovery Kit (Lacrosse Ball + Stopain Clinical Gel)</li>
+        </ul>
+        <div class="bundle-footer">
+          <div>
+            <div class="bundle-price">$195</div>
+            <div class="bundle-hst">+ HST · ~$220 total</div>
+          </div>
+          <a href="#" class="btn-bundle">Gift This Bundle →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Her Recovery Ritual -->
+    <div class="bundle-card">
+      <div class="bundle-img-wrap">
+        <img src="https://raw.githubusercontent.com/isabel0806/achesawayimages/xperigift/targeted%20recovery%20plan%20v2.png"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          alt="Her Recovery Ritual"/>
+        <div class="bundle-img-placeholder" style="display:none;background:linear-gradient(135deg,#fce4ec,#f8bbd0);">🕯️</div>
+      </div>
+      <div class="bundle-body">
+        <div class="bundle-tags">
+          <span class="bundle-tag teal">60-min session</span>
+          <span class="bundle-tag outline">Luxury kit</span>
+        </div>
+        <div class="bundle-name">Her Recovery Ritual</div>
+        <div class="bundle-hook">Move beyond flowers. This is the gift she'll brag to her friends about.</div>
+        <ul class="bundle-includes">
+          <li>1 × 60-min Relaxation Massage</li>
+          <li>Luxury Self-Care Kit (Sacred Earth Organic Rub + Aromatherapy Candle)</li>
+        </ul>
+        <div class="bundle-footer">
+          <div>
+            <div class="bundle-price">$210</div>
+            <div class="bundle-hst">+ HST · ~$237 total</div>
+          </div>
+          <a href="#" class="btn-bundle">Gift This Bundle →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Competitive Edge -->
+    <div class="bundle-card">
+      <div class="bundle-img-wrap">
+        <img src="https://raw.githubusercontent.com/isabel0806/achesawayimages/xperigift/Athletes%20Edge%20v2.png"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          alt="The Competitive Edge"/>
+        <div class="bundle-img-placeholder" style="display:none;background:linear-gradient(135deg,#e3f2fd,#bbdefb);">🏅</div>
+        <div class="bundle-highlight-badge">Most Popular</div>
+      </div>
+      <div class="bundle-body">
+        <div class="bundle-tags">
+          <span class="bundle-tag teal">3× 60-min sessions</span>
+          <span class="bundle-tag outline">Performance</span>
+        </div>
+        <div class="bundle-name">The Competitive Edge</div>
+        <div class="bundle-hook">For the one who gives 100% every single week — and finally gets to rest.</div>
+        <ul class="bundle-includes">
+          <li>3 × 60-min Targeted Sports Massage</li>
+          <li>Biomechanical Baseline Assessment in Session 1</li>
+        </ul>
+        <div class="bundle-footer">
+          <div>
+            <div class="bundle-price">$395</div>
+            <div class="bundle-hst">+ HST · ~$446 total</div>
+          </div>
+          <a href="#" class="btn-bundle">Gift This Bundle →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Longevity Protocol -->
+    <div class="bundle-card">
+      <div class="bundle-img-wrap">
+        <img src="https://raw.githubusercontent.com/isabel0806/achesawayimages/xperigift/mobility%20and%20movement%20kit%20v2.png"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          alt="The Longevity Protocol"/>
+        <div class="bundle-img-placeholder" style="display:none;background:linear-gradient(135deg,#f3e5f5,#e1bee7);">🌿</div>
+        <div class="bundle-new-badge">New</div>
+      </div>
+      <div class="bundle-body">
+        <div class="bundle-tags">
+          <span class="bundle-tag teal">3 sessions</span>
+          <span class="bundle-tag outline">Mobility + Posture</span>
+        </div>
+        <div class="bundle-name">The Longevity Protocol</div>
+        <div class="bundle-hook">For the parents who never complained. Give them back the mobility they gave up for you.</div>
+        <ul class="bundle-includes">
+          <li>2 × 60-min Therapeutic Massage</li>
+          <li>1 × Posture & Mobility Alignment Session</li>
+        </ul>
+        <div class="bundle-footer">
+          <div>
+            <div class="bundle-price">$420</div>
+            <div class="bundle-hst">+ HST · ~$475 total</div>
+          </div>
+          <a href="#" class="btn-bundle">Gift This Bundle →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="eyebrow">How It Works</div>
+  <h2>Simple to give.<br>Unforgettable to receive.</h2>
+  <p class="subtitle">Three steps and it's done — delivered instantly, redeemable anytime at achesawaytoronto.ca.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-icon">🎁</div>
+      <h3>Choose a Bundle</h3>
+      <p>Pick the bundle that fits the person you have in mind. Each one is designed around a real person and a real outcome.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">📧</div>
+      <h3>Send the Gift Card</h3>
+      <p>Delivered instantly via giftcardcafe.com. Print it, email it, or present it on your phone. No expiry pressure.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">📅</div>
+      <h3>They Book Online</h3>
+      <p>The recipient books their sessions at their convenience through Jane App — Canada's leading clinic booking platform.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="eyebrow">FAQ</div>
+  <h2>Common Questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">Do gift cards expire?</div>
+    <div class="faq-a">No. Aches Away gift cards never expire — the recipient can book whenever they're ready, no pressure.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can I add a personal message?</div>
+    <div class="faq-a">Yes! At checkout you can add a custom message that gets included with the gift card delivery.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How does the recipient book their sessions?</div>
+    <div class="faq-a">They'll receive their gift card by email with a unique code. They use it to book directly through Aches Away's Jane App booking system online.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Are bundles covered by insurance?</div>
+    <div class="faq-a">Standard RMT sessions within bundles may be covered depending on the recipient's plan. Because bundles are sold as gift cards (not direct billing), we recommend checking with their provider. The receipt can be provided upon request.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can the recipient choose their therapist?</div>
+    <div class="faq-a">Yes — when booking online, they can select their preferred therapist based on availability and specialty.</div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+  <h2>The right gift is out there.<br>We made it easy to find.</h2>
+  <p>Premium therapeutic care, packaged as a gift. Redeemable at Aches Away Toronto.</p>
+  <a href="#bundles" class="btn-yellow">🎁 Shop All Bundles</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Aches <span>Away</span> Toronto</div>
+  <div class="footer-copy">© 2026 Aches Away Toronto. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="https://achesawaytoronto.ca">Website</a>
+    <a href="#">Book a Session</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Services data
+  const services = [
+    { name: "Pain Relief Massage", duration: "60 min", price: "$120", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Stress Relief Massage", duration: "60 min", price: "$120", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Performance & Recovery Massage", duration: "60 min", price: "$120", type: "Sport", typeColor: "#E8861A" },
+    { name: "Posture Improvement Massage", duration: "60 min", price: "$130", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Massage 30 min", duration: "30 min", price: "$65", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Massage 45 min", duration: "45 min", price: "$96", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Massage 75 min", duration: "75 min", price: "$150", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Massage 90 min", duration: "90 min", price: "$180", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "TMJ Initial Assessment", duration: "60 min", price: "$130", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Go Deeper Massage", duration: "60 min", price: "$130", type: "Specialty", typeColor: "#B45309" },
+    { name: "Prenatal Pregnancy Massage", duration: "60 min", price: "$120", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Massage + Face & Scalp Add On", duration: "90 min", price: "$190", type: "Specialty", typeColor: "#B45309" },
+    { name: "Cupping & Sports Massage", duration: "75 min", price: "$160", type: "Sport", typeColor: "#E8861A" },
+    { name: "Body Bliss & Body Melt", duration: "90 min", price: "$190", type: "Specialty", typeColor: "#B45309" },
+    { name: "Aromatherapy Massage", duration: "60 min", price: "$140", type: "Specialty", typeColor: "#B45309" },
+    { name: "Myofascial Release Therapy", duration: "60 min", price: "$120", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Acupuncture Initial", duration: "60 min", price: "$130", type: "Acupuncture", typeColor: "#7C4DBC" },
+    { name: "Women's Health Acupuncture", duration: "60 min", price: "$130", type: "Acupuncture", typeColor: "#7C4DBC" },
+    { name: "Osteopathy Initial", duration: "60 min", price: "$138", type: "Osteopathy", typeColor: "#2563EB" },
+    { name: "Naturopathic Initial Intake", duration: "60 min", price: "$225", type: "Naturopathy", typeColor: "#0D9488" },
+    { name: "Yoga Massage · Pain Relief", duration: "60 min", price: "$130", type: "Yoga", typeColor: "#16A34A" },
+    { name: "Yoga Acupuncture · Pain Relief", duration: "60 min", price: "$130", type: "Yoga", typeColor: "#16A34A" },
+    { name: "Yoga Acupuncture · Gut Motility", duration: "60 min", price: "$130", type: "Yoga", typeColor: "#16A34A" },
+    { name: "Yoga Massage · Gut Motility", duration: "60 min", price: "$130", type: "Yoga", typeColor: "#16A34A" },
+    { name: "Faz: Head / Neck / Shoulder", duration: "60 min", price: "$140", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Faz: Back, Hips & Legs", duration: "60 min", price: "$140", type: "Massage", typeColor: "#1A9E8C" },
+  ];
+
+  const carousel = document.getElementById('servicesCarousel');
+  services.forEach(s => {
+    carousel.innerHTML += `
+      <div class="service-card">
+        <div class="service-type-badge" style="color:${s.typeColor};background:${s.typeColor}18;border-color:${s.typeColor}55">${s.type}</div>
+        <div class="service-duration">${s.duration}</div>
+        <div class="service-name">${s.name}</div>
+        <div class="service-price">${s.price} <span>+ HST</span></div>
+        <a href="#" class="btn-service">Gift This →</a>
+      </div>`;
+  });
+
+  // FAQ toggle
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
