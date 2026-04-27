@@ -550,7 +550,7 @@
         <div class="ugc-check">No expiry</div>
         <div class="ugc-check">Add personal message</div>
       </div>
-      <a href="#" class="btn-ugc">Buy a Gift Card →</a>
+      <a href="https://www.thegiftcardcafe.com/vcart/shop.php" target="_blank" class="btn-ugc">Buy a Gift Card →</a>
     </div>
     <div class="ugc-right">
       <img class="gift-card-img"
@@ -604,7 +604,7 @@
             <div class="bundle-price">$195</div>
             <div class="bundle-hst">+ HST · ~$220 total</div>
           </div>
-          <a href="#" class="btn-bundle">Gift This Bundle →</a>
+          <a href="https://www.thegiftcardcafe.com/vcart/shopPackage.php" target="_blank" class="btn-bundle">Gift This Bundle →</a>
         </div>
       </div>
     </div>
@@ -633,7 +633,7 @@
             <div class="bundle-price">$210</div>
             <div class="bundle-hst">+ HST · ~$237 total</div>
           </div>
-          <a href="#" class="btn-bundle">Gift This Bundle →</a>
+          <a href="https://www.thegiftcardcafe.com/vcart/shopPackage.php" target="_blank" class="btn-bundle">Gift This Bundle →</a>
         </div>
       </div>
     </div>
@@ -655,15 +655,15 @@
         <div class="bundle-name">The Competitive Edge</div>
         <div class="bundle-hook">For the one who gives 100% every single week — and finally gets to rest.</div>
         <ul class="bundle-includes">
-          <li>3 × 60-min Performance and Recovery Sports Massage</li>
-          <li>Biomechanical Baseline Assessment in Session 1</li>
+          <li>2 × 60-min Performance and Recovery Sports Massage</li>
+          <li>1 × 75-min Accelerated Performance Cupping and Massage</li>
         </ul>
         <div class="bundle-footer">
           <div>
-            <div class="bundle-price">$395</div>
-            <div class="bundle-hst">+ HST · ~$446 total</div>
+            <div class="bundle-price">$380</div>
+            <div class="bundle-hst">+ HST · ~$429 total</div>
           </div>
-          <a href="#" class="btn-bundle">Gift This Bundle →</a>
+          <a href="https://www.thegiftcardcafe.com/vcart/shopPackage.php" target="_blank" class="btn-bundle">Gift This Bundle →</a>
         </div>
       </div>
     </div>
@@ -693,7 +693,7 @@
             <div class="bundle-price">$420</div>
             <div class="bundle-hst">+ HST · ~$475 total</div>
           </div>
-          <a href="#" class="btn-bundle">Gift This Bundle →</a>
+          <a href="https://www.thegiftcardcafe.com/vcart/shopPackage.php" target="_blank" class="btn-bundle">Gift This Bundle →</a>
         </div>
       </div>
     </div>
@@ -773,32 +773,18 @@
 <script>
   // Services data
   const services = [
+    { name: "Massage 45 min", duration: "45 min", price: "$96", type: "Massage", typeColor: "#1A9E8C" },
     { name: "Pain Relief Massage Therapy", duration: "60 min", price: "$120", type: "Massage", typeColor: "#1A9E8C" },
     { name: "Stress Relief Massage Therapy", duration: "60 min", price: "$120", type: "Massage", typeColor: "#1A9E8C" },
     { name: "Performance and Recovery Sports Massage", duration: "60 min", price: "$120", type: "Sport", typeColor: "#E8861A" },
-    { name: "Posture Improvement Massage", duration: "60 min", price: "$130", type: "Massage", typeColor: "#1A9E8C" },
-    { name: "Massage 30 min", duration: "30 min", price: "$65", type: "Massage", typeColor: "#1A9E8C" },
-    { name: "Massage 45 min", duration: "45 min", price: "$96", type: "Massage", typeColor: "#1A9E8C" },
-    { name: "Massage 75 min", duration: "75 min", price: "$150", type: "Massage", typeColor: "#1A9E8C" },
-    { name: "Massage 90 min", duration: "90 min", price: "$180", type: "Massage", typeColor: "#1A9E8C" },
-    { name: "TMJ Initial Assessment and Treatment", duration: "60 min", price: "$130", type: "Massage", typeColor: "#1A9E8C" },
-    { name: "Go Deeper Massage", duration: "60 min", price: "$130", type: "Specialty", typeColor: "#B45309" },
     { name: "Prenatal Pregnancy Massage", duration: "60 min", price: "$120", type: "Massage", typeColor: "#1A9E8C" },
-    { name: "Massage + Face & Scalp Add On", duration: "90 min", price: "$190", type: "Specialty", typeColor: "#B45309" },
-    { name: "Accelerated Performance Cupping and Massage", duration: "75 min", price: "$160", type: "Sport", typeColor: "#E8861A" },
-    { name: "Body Bliss & Body Melt", duration: "90 min", price: "$190", type: "Specialty", typeColor: "#B45309" },
-    { name: "Aromatherapy Massage", duration: "60 min", price: "$140", type: "Specialty", typeColor: "#B45309" },
-    { name: "Myofascial Release Therapy", duration: "60 min", price: "$120", type: "Massage", typeColor: "#1A9E8C" },
-    { name: "Registered Acupuncture Initial", duration: "60 min", price: "$130", type: "Acupuncture", typeColor: "#7C4DBC" },
+    { name: "Posture Improvement Massage", duration: "60 min", price: "$130", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Go Deeper Massage", duration: "60 min", price: "$130", type: "Specialty", typeColor: "#B45309" },
     { name: "Women's Health Acupuncture", duration: "60 min", price: "$130", type: "Acupuncture", typeColor: "#7C4DBC" },
-    { name: "Osteopathy Initial Assessment and Treatment", duration: "60 min", price: "$138", type: "Osteopathy", typeColor: "#2563EB" },
-    { name: "Naturopathic Initial Intake", duration: "60 min", price: "$225", type: "Naturopathy", typeColor: "#0D9488" },
-    { name: "Yoga Massage · Pain Relief", duration: "60 min", price: "$130", type: "Yoga", typeColor: "#16A34A" },
-    { name: "Yoga Acupuncture · Pain Relief", duration: "60 min", price: "$130", type: "Yoga", typeColor: "#16A34A" },
-    { name: "Yoga Acupuncture · Gut Motility", duration: "60 min", price: "$130", type: "Yoga", typeColor: "#16A34A" },
-    { name: "Yoga Massage · Gut Motility", duration: "60 min", price: "$130", type: "Yoga", typeColor: "#16A34A" },
-    { name: "Faz: Head / Neck / Shoulder", duration: "60 min", price: "$140", type: "Massage", typeColor: "#1A9E8C" },
-    { name: "Faz: Back, Hips & Legs", duration: "60 min", price: "$140", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Aromatherapy Massage", duration: "60 min", price: "$140", type: "Specialty", typeColor: "#B45309" },
+    { name: "Accelerated Performance Cupping and Massage", duration: "75 min", price: "$160", type: "Sport", typeColor: "#E8861A" },
+    { name: "Massage 90 min", duration: "90 min", price: "$180", type: "Massage", typeColor: "#1A9E8C" },
+    { name: "Massage + Face & Scalp Add On", duration: "90 min", price: "$190", type: "Specialty", typeColor: "#B45309" },
   ];
 
   const carousel = document.getElementById('servicesCarousel');
@@ -809,7 +795,7 @@
         <div class="service-duration">${s.duration}</div>
         <div class="service-name">${s.name}</div>
         <div class="service-price">${s.price} <span>+ HST</span></div>
-        <a href="#" class="btn-service">Gift This →</a>
+        <a href="https://www.thegiftcardcafe.com/vcart/shopPackage.php" target="_blank" class="btn-service">Gift This →</a>
       </div>`;
   });
 
